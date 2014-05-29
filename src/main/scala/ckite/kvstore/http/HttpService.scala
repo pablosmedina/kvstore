@@ -42,9 +42,11 @@ class HttpService(ckite: CKite) extends Service[Request, Response] {
         response.contentString = writer.writeValueAsString(ckite.status)
         response
       }
-      case Method.Get -> Root / "kv" / key => futurePool {
+      case Method.Get -> Root / "kv" / key  => futurePool {
+        val localOption = request.params.getBoolean("local")
         val response = Response()
-        val result = ckite.readLocal[String](Get(key))
+        val get = Get(key)
+        val result = if (localOption.getOrElse(false)) ckite.readLocal[String](get) else ckite.read[String](get)
         response.contentString = s"$result\n"
         response
       }
