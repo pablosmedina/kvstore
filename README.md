@@ -5,42 +5,35 @@ KVStore - Sample application using CKite
 
 ## Running KVStore example (3 members)
 
-#### Run Member 1
+#### Run Member 1 boostrapping a new cluster just the first time. Subsequent runs of Member 1 starts normal (without bootstrap).
 ```bash
-sbt run -Dport=9091 -Dmembers=localhost:9092,localhost:9093 -DdataDir=/tmp/ckite/member1
+sbt run -Dckite.listen-address=localhost:9091 -Dckite.datadir=/tmp/ckite/member1 -Dckite.bootstrap=true
 ```
-#### Run Member 2
+#### Run Member 2 pointing to Member 1
 ```bash
-sbt run -Dport=9092 -Dmembers=localhost:9091,localhost:9093 -DdataDir=/tmp/ckite/member2
+sbt run -Dckite.listen-address=localhost:9092 -Dckite.datadir=/tmp/ckite/member2 -Dckite.members.0=localhost:9091
 ```
-#### Run Member 3
+#### Run Member 3 pointing to Member 1
 ```bash
-sbt run -Dport=9093 -Dmembers=localhost:9092,localhost:9091 -DdataDir=/tmp/ckite/member3
+sbt run -Dckite.listen-address=localhost:9093 -Dckite.datadir=/tmp/ckite/member3 -Dckite.members.0=localhost:9091
 ```
 #### Put a key-value on the leader member (take a look at the logs for election result)
 ```bash
-curl http://localhost:10091/put/key1/value1
+curl -X POST http://localhost:10091/kv/key1/value1
 ```
 #### Get the value of key1 replicated in member 2 
 ```bash
-curl http://localhost:10092/get/key1
+curl http://localhost:10092/kv/key1
 ```
 #### Checkout the admin console on any member to see the cluster status
 ```bash
 curl http://localhost:10093/status
 ```
-#### Add a new member (localhost:9094) to the Cluster
-```bash
-curl http://localhost:10091/changecluster/localhost:9091,localhost:9092,localhost:9093,localhost:9094
-```
-#### Run Member 4
-```bash
-sbt run -Dport=9094 -Dmembers=localhost:9092,localhost:9091,localhost:9093 -DdataDir=/tmp/ckite/member4
-```
+
 
 ## Rest admin console
 
-CKite exposes an admin console showing its status and useful metrics. If the rpc port is 9091 then the admin console is exposed under http://localhost:10091/status by default.
+KVStore exposes an admin console showing its status and useful metrics. If the rpc port is 9091 then the admin console is exposed under http://localhost:10091/status by default.
 
 #### Leader
 
