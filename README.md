@@ -21,9 +21,13 @@ sbt run -Dckite.listen-address=localhost:9093 -Dckite.datadir=/tmp/ckite/member3
 ```bash
 curl -X POST http://localhost:10091/kv/key1/value1
 ```
-#### Get the value of key1 replicated in member 2 
+#### Get the value of key1. This is a consistent read. If the receiving node is not a Leader then it is forwarded to the Leader.
 ```bash
 curl http://localhost:10092/kv/key1
+```
+#### Get the value of key1 performing a local read in member 2. This allows possible stale values.
+```bash
+curl http://localhost:10092/kv/key1?local=true
 ```
 #### Checkout the admin console on any member to see the cluster status
 ```bash
