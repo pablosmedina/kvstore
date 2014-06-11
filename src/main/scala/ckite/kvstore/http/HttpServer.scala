@@ -7,10 +7,10 @@ import com.twitter.finagle.http.Request
 import com.twitter.finagle.http.Http
 import java.net.InetSocketAddress
 import com.twitter.util.Closable
-import ckite.CKite
+import ckite.Raft
 import com.typesafe.config.ConfigFactory
 
-class HttpServer(ckite: CKite) {
+class HttpServer(raft: Raft) {
   
   var closed = false
   var server: Closable = _
@@ -22,7 +22,7 @@ class HttpServer(ckite: CKite) {
       .codec(RichHttp[Request](Http()))
       .bindTo(new InetSocketAddress(restServerPort))
       .name("HttpServer")
-      .build(new HttpService(ckite))
+      .build(new HttpService(raft))
   }
   
   def stop() = synchronized {
@@ -35,5 +35,5 @@ class HttpServer(ckite: CKite) {
 }
 
 object HttpServer {
-  def apply(ckite: CKite) = new HttpServer(ckite)
+  def apply(raft: Raft) = new HttpServer(raft)
 }

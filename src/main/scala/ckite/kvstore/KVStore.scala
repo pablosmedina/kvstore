@@ -6,6 +6,7 @@ import ckite.statemachine.StateMachine
 import ckite.util.Serializer
 import ckite.util.Logging
 
+
 class KVStore extends StateMachine with Logging {
 
   val map = new ConcurrentHashMap[String, String]()
