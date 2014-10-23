@@ -16,6 +16,8 @@ libraryDependencies ++= Seq(
 
 EclipseKeys.withSource := true
 
+fork in run := false
+
 unmanagedSourceDirectories in Compile <++= baseDirectory { base =>
   Seq(
     base / "src/main/resources"
