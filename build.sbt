@@ -4,17 +4,15 @@ organization := "io.ckite"
 
 version := "0.1.0-SNAPSHOT"
 
-scalaVersion := "2.10.4"
+scalaVersion := "2.11.7"
 
 libraryDependencies ++= Seq(
-	"io.ckite" % "ckite" % "0.1.6",
-	"com.twitter" % "chill_2.10" % "0.3.6",	
-	"com.twitter" %% "finagle-http" % "6.6.2",
-    "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.1.3",
-    "ch.qos.logback" % "logback-classic" % "1.1.1"
+"io.ckite"						% 	"ckite-core" 			    % "0.2.0",
+"io.ckite"						% 	"ckite-finagle" 		    % "0.2.0",
+"com.twitter"					%% 	"finagle-http" 			    % "6.27.0",
+"com.fasterxml.jackson.module"	%% 	"jackson-module-scala" 		% "2.4.4",
+"ch.qos.logback"				% 	"logback-classic" 		  	% "1.1.1"
 )
-
-EclipseKeys.withSource := true
 
 fork in run := false
 

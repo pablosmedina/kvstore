@@ -1,11 +1,12 @@
 package ckite.kvstore
 
-import ckite.RaftBuilder
+import ckite.CKiteBuilder
 import ckite.kvstore.http.HttpServer
+import ckite.rpc.FinagleThriftRpc
 
 object KVStoreBootstrap extends App {
-  val raft = RaftBuilder().stateMachine(new KVStore()).build
-  raft start
-  val http = HttpServer(raft)
-  http.start
+  val ckite = CKiteBuilder().stateMachine(new KVStore()).rpc(FinagleThriftRpc).build
+  ckite.start()
+  val http = HttpServer(ckite)
+  http.start()
 }
