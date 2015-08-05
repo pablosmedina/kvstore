@@ -7,7 +7,7 @@ KVStore - Sample application using CKite
 
 #### Run Member 1 boostrapping a new cluster just the first time. Take note that you have to bootstrap a new cluster only for the very first node. Subsequent runs of Member 1 starts normal (without bootstrap).
 ```bash
-sbt run -Dckite.listen-address=localhost:9091 -Dckite.datadir=/tmp/ckite/member1 -Dckite.bootstrap=true
+sbt run -Dckite.finagle.listen-address=localhost:9091 -Dckite.datadir=/tmp/ckite/member1 -Dckite.bootstrap=true
 
 
 23:18:38.002 INFO  [run-main] ckite.RLog - Initializing...
@@ -38,7 +38,7 @@ INFO: Finagle version 6.6.2 (rev=2c5f728dcbd9d460a0e983aec6ae83e9bc75aa12) built
 
 #### Run Member 2 pointing to Member 1 to join the cluster
 ```bash
-sbt run -Dckite.listen-address=localhost:9092 -Dckite.datadir=/tmp/ckite/member2 -Dckite.members.0=localhost:9091
+sbt run -Dckite.finagle.listen-address=localhost:9092 -Dckite.datadir=/tmp/ckite/member2 -Dckite.members.0=localhost:9091
 
 
 23:20:19.667 INFO  [run-main] ckite.RLog - Initializing...
@@ -79,7 +79,7 @@ INFO: Finagle version 6.6.2 (rev=2c5f728dcbd9d460a0e983aec6ae83e9bc75aa12) built
 ```
 #### Run Member 3 pointing to Member 1 to join the cluster
 ```bash
-sbt run -Dckite.listen-address=localhost:9093 -Dckite.datadir=/tmp/ckite/member3 -Dckite.members.0=localhost:9091
+sbt run -Dckite.finagle.listen-address=localhost:9093 -Dckite.datadir=/tmp/ckite/member3 -Dckite.members.0=localhost:9091
 ```
 #### Put a key-value on the leader member (take a look at the logs for election result)
 ```bash
