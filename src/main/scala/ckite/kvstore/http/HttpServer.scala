@@ -14,7 +14,7 @@ class HttpServer(ckite: CKite) {
   var server: Closable = _
 
   def start() = {
-    val restServerPort = ConfigFactory.load().getString("ckite.finagle.listen-address").split(":")(1).toInt + 1000
+    val restServerPort = ConfigFactory.load().getString("ckite.listen-address").split(":")(1).toInt + 1000
     val adminServerPort = restServerPort + 1000
     server = ServerBuilder()
       .codec(RichHttp[Request](Http()))
